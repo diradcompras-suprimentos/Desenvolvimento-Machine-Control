@@ -1,0 +1,102 @@
+/* ================== RESET ================== */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================== NAVBAR ================== */
+.navbar {
+  border-bottom: 2px solid #444;
+}
+
+/* ================== TÍTULOS ================== */
+h3.fw-bold {
+  color: #333;
+}
+
+/* ================== INPUT DE BUSCA ================== */
+#busca {
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* ================== CARDS ================== */
+.card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* ================== BOTÕES ================== */
+.btn {
+  border-radius: 8px;
+}
+
+.btn-warning {
+  color: #fff;
+}
+
+.btn-danger {
+  color: #fff;
+}
+
+.btn-primary {
+  color: #fff;
+}
+
+/* ================== MODAL ================== */
+.modal-content {
+  border-radius: 12px;
+}
+
+.modal-header {
+  background-color: #212529;
+  color: #fff;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.modal-footer .btn {
+  min-width: 100px;
+}
+
+/* ================== TABELAS EXPORTADAS (PDF/EXCEL) ================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #212529;
+  color: #fff;
+}
+
+/* ================== RESPONSIVIDADE ================== */
+@media (max-width: 768px) {
+  #busca {
+    width: 100% !important;
+  }
+
+  .card-img-top {
+    height: 140px;
+  }
+}
