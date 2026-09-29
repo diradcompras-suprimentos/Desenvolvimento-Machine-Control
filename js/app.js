@@ -74,7 +74,7 @@ function renderizarEquipamentos() {
 // Ver detalhes
 function verDetalhes(index) {
   const eq = equipamentos[index];
-  alert(\`Nome: \${eq.nome}\nMarca: \${eq.marca}\nModelo: \${eq.modelo}\nSérie: \${eq.serie}\nLocal: \${eq.local}\nStatus: \${eq.status}\nData: \${eq.dataCadastro}\`);
+  alert(`Nome: ${eq.nome}\nMarca: ${eq.marca}\nModelo: ${eq.modelo}\nSérie: ${eq.serie}\nLocal: ${eq.local}\nStatus: ${eq.status}\nData: ${eq.dataCadastro}`);
 }
 
 // Editar
