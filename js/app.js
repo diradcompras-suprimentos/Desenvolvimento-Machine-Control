@@ -5,28 +5,45 @@ function salvarEquipamento(event) {
   event.preventDefault();
 
   const index = document.getElementById("editIndex").value;
-  const equipamento = {
-    nome: document.getElementById("nome").value,
-    marca: document.getElementById("marca").value,
-    modelo: document.getElementById("modelo").value,
-    serie: document.getElementById("serie").value,
-    local: document.getElementById("local").value,
-    status: document.getElementById("status").value,
-    imagem: document.getElementById("imagem").value || null,
-    dataCadastro: new Date().toLocaleDateString()
-  };
+  const fileInput = document.getElementById("imagem");
+  const file = fileInput.files[0];
 
-  if (index === "") {
-    equipamentos.push(equipamento);
-  } else {
-    equipamentos[index] = equipamento;
+  function finalize(imagem) {
+    const equipamento = {
+      nome: document.getElementById("nome").value,
+      marca: document.getElementById("marca").value,
+      modelo: document.getElementById("modelo").value,
+      serie: document.getElementById("serie").value,
+      local: document.getElementById("local").value,
+      status: document.getElementById("status").value,
+      imagem: imagem,
+      dataCadastro: new Date().toLocaleDateString()
+    };
+
+    if (index === "") {
+      equipamentos.push(equipamento);
+    } else {
+      equipamentos[index] = equipamento;
+    }
+
+    localStorage.setItem("equipamentos", JSON.stringify(equipamentos));
+    renderizarEquipamentos();
+    bootstrap.Modal.getInstance(document.getElementById("formModal")).hide();
+    document.getElementById("equipamentoForm").reset();
+    document.getElementById("editIndex").value = "";
   }
 
-  localStorage.setItem("equipamentos", JSON.stringify(equipamentos));
-  renderizarEquipamentos();
-  bootstrap.Modal.getInstance(document.getElementById("formModal")).hide();
-  document.getElementById("equipamentoForm").reset();
-  document.getElementById("editIndex").value = "";
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      finalize(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    // Ao editar sem selecionar nova imagem, mantém a existente
+    const existingImage = index !== "" ? equipamentos[index].imagem : null;
+    finalize(existingImage);
+  }
 }
 
 // Renderizar cards
@@ -70,7 +87,6 @@ function editar(index) {
   document.getElementById("serie").value = eq.serie;
   document.getElementById("local").value = eq.local;
   document.getElementById("status").value = eq.status;
-  document.getElementById("imagem").value = eq.imagem;
 }
 
 // Excluir
