@@ -87,6 +87,52 @@
     </div>
   </div>
 
+  <!-- Modal Detalhes -->
+  <div class="modal fade" id="detalhesModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Detalhes do Equipamento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="detalhesConteudo"></div>
+          <hr>
+          <h5 class="fw-bold mb-3">Histórico de Manutenção</h5>
+          <div id="historicoLista"></div>
+          <hr>
+          <h6 class="fw-bold">Adicionar Registro de Manutenção</h6>
+          <form id="historicoForm">
+            <div class="row g-3 mt-1">
+              <div class="col-md-6">
+                <label class="form-label">Peças Trocadas</label>
+                <input type="text" id="histPecas" class="form-control" placeholder="Ex: Filtro de óleo, Correia...">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Data da Troca</label>
+                <input type="date" id="histData" class="form-control">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Empresa Responsável</label>
+                <input type="text" id="histEmpresa" class="form-control" placeholder="Nome da empresa">
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Observação</label>
+                <textarea id="histObs" class="form-control" rows="2" placeholder="Observações sobre o reparo..."></textarea>
+              </div>
+              <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="salvarHistorico(event)">+ Adicionar Registro</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts principais -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/app.js"></script>

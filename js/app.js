@@ -1,4 +1,5 @@
 let equipamentos = JSON.parse(localStorage.getItem("equipamentos")) || [];
+let detalheIndexAtual = null;
 
 // Salvar ou atualizar equipamento
 function salvarEquipamento(event) {
@@ -23,6 +24,7 @@ function salvarEquipamento(event) {
     if (index === "") {
       equipamentos.push(equipamento);
     } else {
+      equipamento.historico = equipamentos[index].historico || [];
       equipamentos[index] = equipamento;
     }
 
@@ -73,8 +75,71 @@ function renderizarEquipamentos() {
 
 // Ver detalhes
 function verDetalhes(index) {
+  detalheIndexAtual = index;
   const eq = equipamentos[index];
-  alert(`Nome: ${eq.nome}\nMarca: ${eq.marca}\nModelo: ${eq.modelo}\nSérie: ${eq.serie}\nLocal: ${eq.local}\nStatus: ${eq.status}\nData: ${eq.dataCadastro}`);
+  document.getElementById("detalhesConteudo").innerHTML = `
+    <div class="row g-3">
+      <div class="col-md-4">
+        <img src="${eq.imagem || "https://via.placeholder.com/300x180?text=Sem+Imagem"}" class="img-fluid rounded">
+      </div>
+      <div class="col-md-8">
+        <h4 class="fw-bold">${eq.nome}</h4>
+        <p class="mb-1"><strong>Marca:</strong> ${eq.marca || "-"}</p>
+        <p class="mb-1"><strong>Modelo:</strong> ${eq.modelo || "-"}</p>
+        <p class="mb-1"><strong>Nº de Série:</strong> ${eq.serie || "-"}</p>
+        <p class="mb-1"><strong>Local:</strong> ${eq.local}</p>
+        <p class="mb-1"><strong>Status:</strong> ${eq.status}</p>
+        <p class="mb-0"><strong>Data de Cadastro:</strong> ${eq.dataCadastro}</p>
+      </div>
+    </div>
+  `;
+  renderizarHistorico(index);
+}
+
+// Salvar registro de manutenção
+function salvarHistorico(event) {
+  event.preventDefault();
+  const index = detalheIndexAtual;
+  if (index === null) return;
+
+  const registro = {
+    pecas: document.getElementById("histPecas").value,
+    data: document.getElementById("histData").value,
+    empresa: document.getElementById("histEmpresa").value,
+    observacao: document.getElementById("histObs").value
+  };
+
+  if (!equipamentos[index].historico) {
+    equipamentos[index].historico = [];
+  }
+  equipamentos[index].historico.push(registro);
+  localStorage.setItem("equipamentos", JSON.stringify(equipamentos));
+  renderizarHistorico(index);
+  document.getElementById("historicoForm").reset();
+}
+
+// Renderizar histórico de manutenção
+function renderizarHistorico(index) {
+  const container = document.getElementById("historicoLista");
+  const historico = equipamentos[index].historico || [];
+
+  if (historico.length === 0) {
+    container.innerHTML = "<p class='text-muted'>Nenhum registro de manutenção cadastrado.</p>";
+    return;
+  }
+
+  container.innerHTML = historico.map(h => `
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <strong>${h.pecas || "Sem peças especificadas"}</strong>
+          <span class="text-muted">${h.data || "-"}</span>
+        </div>
+        <p class="mb-1"><strong>Empresa:</strong> ${h.empresa || "-"}</p>
+        <p class="mb-0 text-muted">${h.observacao || ""}</p>
+      </div>
+    </div>
+  `).join("");
 }
 
 // Editar
